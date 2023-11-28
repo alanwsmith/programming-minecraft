@@ -14,8 +14,8 @@ config.treeHeight = 5
 config.treeLeaves = 1
 config.treeEmptySpace = 1
 config.treeDirt = 1
-config.sleepTop = 180
-config.sleepBottom = 900
+config.sleepTop = 120
+config.sleepBottom = 1000
 config.iteration = 1
 
 if not config.currentLevel then
@@ -138,6 +138,7 @@ local main = function(c)
 
     local requiredRoundTripFuel = (maxHeight * 2) + 200
 
+    -- currently setup for just one run
     local keepGoing = true
 
     -- main loop
@@ -166,164 +167,25 @@ local main = function(c)
                 lib.dumpItem("minecraft:birch_log")
                 lib.dumpItem("minecraft:stick")
                 turtle.turnRight()
-                sleep(c.sleepBottom)
                 c.direction = "up"
+                lib.saveConfig(config)
+                sleep(c.sleepBottom)
             else
                 print("Went too far down")
                 c.direction = "up"
+                lib.saveConfig(config)
             end
         else
             print("ERROR HAPPEND WITH DIRECTION")
         end
         lib.saveConfig(config)
-        if c.direction == "up" then
-            if turtle.getFuelLevel() < requiredRoundTripFuel then
-                keepGoing = false
-            end
-        end
-    end    
+        -- if c.direction == "up" then
+        --     if turtle.getFuelLevel() < requiredRoundTripFuel then
+        --         keepGoing = false
+        --     end
+        -- end
+    end
 end
 
 main(config)
 
-
-
-    
-    
-    -- local doSleep = function(c)
-    --     print("Sleeping From: " .. config.currentSleep .. " To: " .. c.sleepTime)
-    --     print("For iteration: " ..config.iteration)
-    --     for asleep = config.currentSleep, c.sleepTime do
-    --         sleep(1)
-    --     end
-    --     config.iteration = config.iteration + 1
-    --     -- c.status = "chopUp"
-    -- end
-
-
--- local chopUp = function(c)
---     -- print("chopUp")
---     for level = 1, c.levels do
---         print("Ascending level: " .. level)
---         for treeBlock = 1, c.treeHeight do
---             print("- Cutting tree")
---             turtle.dig()
---             turtle.turnRight()
---             turtle.turnRight()
---             turtle.dig()
---             goUp(c)
---         end
---         for leaveBlock = 1, c.treeLeaves do
---             print("- Skipping leaves")
---             goUp(c)
---         end
---         for emptySpace = 1, c.treeEmptySpace do
---             print("- Skipping empty space")
---             goUp(c)
---         end
---         for dirtSpace = 1, c.treeDirt do
---             print("- Skipping dirt")
---             goUp(c)
---         end
---     end
---     c.status = "plantDown"
--- end
-
-
--- local plantDown = function(c)
---     -- print("plantDown")
---     for level = c.levels, 1, -1  do
---         print("Decending level: " .. level)
---         for dirtSpace = c.treeDirt, 1, -1 do
---             print("- Skipping dirt")
---             goDown(c)
---         end
---         for emptySpace = 1, c.treeEmptySpace do
---             print("- Skipping empty space")
---             goDown(c)
---         end
---         for leaveBlock = 1, c.treeLeaves do
---             print("- Skipping leaves")
---             goDown(c)
---         end
---         for treeBlock = c.treeHeight, 1, -1 do
---             if treeBlock == 1 then
---                 sleep(3)
---                 if lib.placeItemForward("minecraft:birch_sapling") then
---                     print("- Planted sapling")
---                 else
---                     print("- Out of saplings")
---                 end
---             else 
---                 print("- Skipping planting")
---             end
---             goDown(c)
---         end
---     end
---     c.status = "doSleep"
--- end
-
-
-
-
-
--- local check_tree = function()
---     if details.name() == "minecraft:birch_log" then
---         turtle.dig()
---     end
---     -- remove saplings so they don't grow 
---     -- and stop other saplings from falling
---     if details.name() == "minecraft:birch_sapling" then
---         turtle.dig()
---     end
--- end
-
-
--- local chop_up = function()
---     for level = 1, config.levelHeight do
---         for dir = 1, 2 do
---             check_tree()
---             turtle.suck()
---             turtle.turnRight()
---             turtle.turnRight()
---         end
---         while turtle.detectUp() do
---             turtle.digUp()
---         end
---         turtle.up()
---     end
--- end
-
--- local plant_down = function()
---     for level = 1, config.levelHeight do
---         while turtle.detectDown() do
---             turtle.digDown()
---         end
---         turtle.down()
---     end
---     for dir = 1, 2 do
---         turtle.suck()
---         if details.name() ~= "minecraft:birch_sapling" then
---             place.itemForward("minecraft:birch_sapling")
---         end
---         turtle.turnRight()
---         turtle.turnRight()
---     end
--- end
-
--- local do_harvest = function(c)
---     for level = 1, c.levels do
---         chop_up()
---     end
---     sleep(c.sleep)
---     for level = 1, c.evels do
---         plant_down()
---     end
--- end
-
--- local fuel_level = turtle.getFuelLevel()
--- if fuel_level > 500 then
---     do_harvest()
--- else
---     print("Not enough fuel")
--- end

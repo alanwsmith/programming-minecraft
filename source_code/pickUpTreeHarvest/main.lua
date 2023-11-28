@@ -1,7 +1,11 @@
 local lib = require("/lib")
 local config = lib.loadConfig()
 
-config.sleepTime = 30
+config.sleepTime = 80
+
+if not config.active then
+    config.active = true
+end
 
 local getStuff = function(c)
     while turtle.detect() == false do
@@ -36,8 +40,6 @@ while config.keepGoing do
 end
 
 
-
-config.active = false
 lib.saveConfig(config)
 
 

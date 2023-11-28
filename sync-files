@@ -8,6 +8,7 @@ do
 --exclude='.current.json' \
 --exclude='.settings' \
 --exclude='.DS_Store' \
+--exclude='_logs' \
 "/Users/alan/workshop/programming-minecraft-robots/source_code/" \
 "/Users/alan/Desktop/minecraft/saves/Prototype World/computercraft/computer/${i}"
 done
