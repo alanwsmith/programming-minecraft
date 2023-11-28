@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for i in {8..25}
+do 
+  echo "This is ${i}"
+  rsync \
+-av \
+--exclude='.current.json' \
+--exclude='.settings' \
+--exclude='.DS_Store' \
+"/Users/alan/workshop/programming-minecraft-robots/source_code/" \
+"/Users/alan/Desktop/minecraft/saves/Prototype World/computercraft/computer/${i}"
+done
+

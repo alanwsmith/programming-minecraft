@@ -14,7 +14,7 @@ function lib.confirmItemInSlot(item, slot)
     end
 end
 
-function lib.dropItemForward(name) 
+function lib.dropItemForward(name)
     for slot = 1, 16 do
         if lib.confirmItemInSlot(name, slot) then
             turtle.drop()
@@ -33,7 +33,7 @@ function lib.dumpItem(item)
     end
 end
 
-function lib.loadConfig() 
+function lib.loadConfig()
     local currentFile = fs.open(".current.json", "r")
     if currentFile then
         local config = textutils.unserializeJSON(currentFile.readAll())
@@ -51,7 +51,6 @@ function lib.loadConfig()
         return {}
     end
 end
-
 
 function lib.placeItemDown(item)
     if lib.confirmItemInSlot(item, turtle.getSelectedSlot()) then
@@ -87,8 +86,7 @@ function lib.placeItemForward(item)
     end
 end
 
-
-function lib.saveConfig(data) 
+function lib.saveConfig(data)
     local currentProgramPath = shell.getRunningProgram()
     data._directory = fs.getDir(currentProgramPath)
     data._program = fs.getName(currentProgramPath)
