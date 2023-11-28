@@ -1,0 +1,5 @@
+#!/bin/bash
+
+watchexec --project-origin . -w *.lua ./sync-files
+
+
